@@ -4,9 +4,9 @@
 ;
 ;-------------------------------------------------------------------------------
             .cdecls C,LIST,"msp430.h"       ; Include device header file
-            
+
 ;-------------------------------------------------------------------------------
-            .def    RESET                   ; Export program entry-point to
+            .def    TIMER0_A0_ISR            ; Export program entry-point to
                                             ; make it known to linker.
 ;-------------------------------------------------------------------------------
             .text                           ; Assemble into program memory.
@@ -16,33 +16,17 @@
                                             ; references to current section.
 
 ;-------------------------------------------------------------------------------
-RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
-StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+; ISR Definition
+;-------------------------------------------------------------------------------
+TIMER0_A0_ISR
+			XOR.B	#BIT0,&P1OUT
+			XOR.B	#BIT7,&P4OUT
+			reti
 
 
-;-------------------------------------------------------------------------------
-; Main loop here
-;-------------------------------------------------------------------------------
-			bis.b	#BIT0,&P1DIR			; P1.0 as output
-			bis.b	#BIT7,&P4DIR			; P4.7 as output
-			bis.b	#BIT0,&P1OUT			; Initially P1.0: High
-			bis.b	#BIT7,&P4OUT			; Initially P4.7: High
-			mov.w	#0x7FFF,&TA0CCR0
-			bis.w	#CCIE,TA0CCTL0
-			bis.w	#MC__UP+TASSEL__ACLK+TACLR,&TA0CTL
-			nop
-			bis.w	#GIE+LPM3,SR
-			nop
 
 ;-------------------------------------------------------------------------------
-; Stack Pointer definition
+; ISR Allocation
 ;-------------------------------------------------------------------------------
-            .global __STACK_END
-            .sect   .stack
-            
-;-------------------------------------------------------------------------------
-; Interrupt Vectors
-;-------------------------------------------------------------------------------
-            .sect   ".reset"                ; MSP430 RESET Vector
-            .short  RESET
-            
+            .sect   TIMER0_A0_VECTOR
+            .short  TIMER0_A0_ISR
