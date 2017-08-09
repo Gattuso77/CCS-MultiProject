@@ -33,4 +33,5 @@
 .jxbrowser-data
 RemoteSystemsTempFiles
 Debug
+/TestingProject/
 .launches
