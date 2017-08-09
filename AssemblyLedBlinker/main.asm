@@ -27,7 +27,7 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
 			bis.b	#BIT7,&P4DIR			; P4.7 as output
 			bis.b	#BIT0,&P1OUT			; Initially P1.0: High
 			bis.b	#BIT7,&P4OUT			; Initially P4.7: High
-			mov.w	#0x1000,&TA0CCR0
+			mov.w	#0x7FFF,&TA0CCR0
 			bis.w	#CCIE,TA0CCTL0
 			bis.w	#MC__UP+TASSEL__ACLK+TACLR,&TA0CTL
 			nop
