@@ -69,6 +69,7 @@ int main(void)
 {
   WDTCTL = WDTPW + WDTHOLD;                 // Stop WDT
   P1DIR |= 0x01;                            // P1.0 output
+  P4DIR |= 0x80;                            // P4.7 output
   TA0CCTL0 = CCIE;                          // CCR0 interrupt enabled
   TA0CCR0 = 50000;
   TA0CTL = TASSEL_2 + MC_1 + TACLR;         // SMCLK, upmode, clear TAR
@@ -88,5 +89,6 @@ void __attribute__ ((interrupt(TIMER0_A0_VECTOR))) TIMER0_A0_ISR (void)
 #endif
 {
   P1OUT ^= 0x01;                            // Toggle P1.0
+  P4OUT ^= 0x80;                            // Toggle P4.7
 }
 
