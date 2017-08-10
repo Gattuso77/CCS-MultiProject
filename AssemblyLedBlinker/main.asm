@@ -32,7 +32,7 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
 			bis.b 	#BIT2,&P2DIR
 			; END of additional changes
 			mov.w	#0x3333,&TA0CCR0
-			bis.w	#CCIE,TA0CCTL0
+			bis.w	#CCIE,&TA0CCTL0
 			bis.w	#MC__CONTINUOUS+TASSEL__ACLK+TACLR,&TA0CTL
 			nop
 			bis.w	#GIE+LPM3,SR
