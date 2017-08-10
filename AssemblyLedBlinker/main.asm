@@ -17,7 +17,7 @@
 
 ;-------------------------------------------------------------------------------
 RESET       mov.w   #__STACK_END,SP         ; Initialize stackpointer
-StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
+StopWDT     mov.w   #WDT_ADLY_250,&WDTCTL  ; Stop watchdog timer
 
 
 ;-------------------------------------------------------------------------------
@@ -27,6 +27,7 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
 			BIS.B	#BIT7,&P4DIR			; P4.7 as output
 			BIS.B	#BIT0,&P1OUT			; Initially P1.0: High
 			BIS.B	#BIT7,&P4OUT			; Initially P4.7: High
+			BIS.W	#WDTIE,&SFRIE1			; Enabling the WDT interrupts
 			nop
 			bis.w	#GIE+LPM3,SR			; Enable interrupts and set Low-power-mode to 3
             nop
