@@ -28,8 +28,6 @@ StopWDT     mov.w   #WDTPW|WDTHOLD,&WDTCTL  ; Stop watchdog timer
 			BIS.B	#BIT0,&P1OUT			; Initially P1.0: High
 			BIS.B	#BIT7,&P4OUT			; Initially P4.7: High
 Looper		mov.w	#0xffff,R15				; Delay loop
-			XOR.B	#BIT0,&P1OUT
-			XOR.B	#BIT7,&P4OUT
 Decr		DEC.W	R15
 			jz		Looper
             jmp		Decr
